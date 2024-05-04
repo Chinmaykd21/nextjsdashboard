@@ -107,8 +107,13 @@ export const authenticate = async (
   prevState: string | undefined,
   formData: FormData,
 ) => {
+  let responseRedirectUrl = null;
   try {
-    await signIn('credentials', formData);
+    console.log('***** formData', formData);
+    responseRedirectUrl = await signIn('credentials', {
+      ...Object.fromEntries(formData),
+      redirect: false,
+    });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -119,5 +124,7 @@ export const authenticate = async (
       }
     }
     throw error;
+  } finally {
+    if (responseRedirectUrl) redirect(responseRedirectUrl);
   }
 };
