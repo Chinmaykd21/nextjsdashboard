@@ -109,7 +109,6 @@ export const authenticate = async (
 ) => {
   let responseRedirectUrl = null;
   try {
-    console.log('***** formData', formData);
     responseRedirectUrl = await signIn('credentials', {
       ...Object.fromEntries(formData),
       redirect: false,
